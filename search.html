@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="./css/style.css">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://127.0.0.1:5000/api/v1/startvalues",
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                var teams = data.team_list;
+                var countries = data.country_list;
+                var leagues = data.league_list;
+                var positions = data.position_list;
+                var teamsHtml = '';
+                for (var i = 0; i < teams.length; i++) {
+                    teamsHtml += '<option value="' + teams[i] + '">' + teams[i] + '</option>';
+                }
+                $('#team_from').append(teamsHtml);
+                $('#team_to').append(teamsHtml);
+                var countriesHtml = '';
+                for (var i = 0; i < countries.length; i++) {
+                    countriesHtml += '<option value="' + countries[i] + '">' + countries[i] + '</option>';
+                }
+                $('#country_from').append(countriesHtml);
+                $('#country_to').append(countriesHtml);
+                var positionHtml = '';
+                for (var i = 0; i < positions.length; i++) {
+                    positionHtml += '<option value="' + positions[i] + '">' + positions[i] + '</option>';
+                }
+                $('#position').append(positionHtml);
+                var leaguesHtml = '';
+                for (var i = 0; i < leagues.length; i++) {
+                    leaguesHtml += '<option value="' + leagues[i] + '">' + leagues[i] + '</option>';
+                }
+                $('#league_from').append(leaguesHtml);
+                $('#league_to').append(leaguesHtml);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("funzione chiamata quando la chiamata fallisce", jqXHR, textStatus, errorThrown);  
+            }
+        })
+        //todo: gestire onclick di searchBtn
+    })
+    </script>
+    <div class="col g-3">
+        <div class="row-md-4">
+            <div class="col-md-6">
+                <label for="team_from" class="form-label">Seleziona team di partenza</label>
+                <select id="team_from" class="form-select">
+                    <option value="">Select Team</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="team_to" class="form-label">Seleziona team di arrivo</label>
+                <select id="team_to" class="form-select">
+                    <option value="">Select Team</option>
+                </select>
+            </div>
+        </div>
+        <div class="row-md-4">
+            <div class="col-md-6">
+                <label for="country_from" class="form-label">Seleziona nazione di partenza</label>
+                <select id="country_from" class="form-select">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="country_to" class="form-label">Seleziona nazione di arrivo</label>
+                <select id="country_to" class="form-select">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+        </div>
+        <div class="row-md-4">
+            <div class="col-md-6">
+                <label for="position" class="form-label">Seleziona posizione</label>
+                <select id="position" class="form-select">
+                    <option value="">Select Position</option>
+                </select>
+            </div>
+        </div>
+        <div class="row-md-4">
+            <div class="col-md-6">
+                <label for="league_from" class="form-label">Selezione divisione di partenza</label>
+                <select id="league_from" class="form-select">
+                    <option value="">Select League</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="league_to" class="form-label">Selezione divisione di arrivo</label>
+                <select id="league_to" class="form-select">
+                    <option value="">Select League</option>
+                </select>
+            </div>
+        </div>
+        <div class="row-md-4" id="searchBtnDiv" style="justify-content: right;">
+            <button id='searchBtn' class="btn btn-primary">Cerca</button>
+        </div>
+    </div>
+   
+</body>
